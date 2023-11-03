@@ -8,57 +8,37 @@
         placeholder="Type new todo"
         autofocus
         type="text"
+        [(ngModel)]="nuevaTarea"
+        (keyup.enter)="guardarTarea()"
       />
     </div>
   </header>
   <div class="container todoapp-wrapper">
     <!-- This section should be hidden by default and shown when there are todos -->
-    <section class="main">
-      <ul class="todo-list">
-        <li class="completed">
-          <div class="view">
-            <input class="toggle" type="checkbox" checked />
-            <label>Learn JavaScript</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Learn JavaScript" />
-        </li>
-        <li>
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Buy a unicorn</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Buy a unicorn" />
-        </li>
-        <li class="editing">
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Make dishes</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Make dishes" />
-        </li>
-      </ul>
-    </section>
-    <!-- This footer should be hidden by default and shown when there are todos -->
-    <footer class="footer">
+
+
+      <router-outlet></router-outlet>
+ <!-- This footer should be hidden by default and shown when there are todos -->
+    <footer class="footer" *ngIf="tareas.length > 0">
       <!-- This should be `0 items left` by default -->
-      <span class="todo-count"><strong>0</strong> item left</span>
+      <span class="todo-count">
+        <strong>{{ tareas.length }}</strong>
+        item<span *ngIf="tareas.length === 1"> left</span><span *ngIf="tareas.length !== 1">s left</span>
+      </span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a routerLink="/" class="selected">All</a>
+          <a routerLink="/" [routerLinkActive]="'selected'" >All</a>
         </li>
         <li>
-          <a routerLink="/pending">Pending</a>
+          <a routerLink="/Pending"  [routerLinkActive]="'selected'">Pending</a>
         </li>
         <li>
-          <a routerLink="/completed">Completed</a>
+          <a routerLink="/Completed"  [routerLinkActive]="'selected'">Completed</a>
         </li>
       </ul>
       <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
+      <button *ngIf="tareas1.length >= 1" class="clear-completed" (click)="onClearTaskStatus()">Clear completed</button>
     </footer>
   </div>
 </section>
